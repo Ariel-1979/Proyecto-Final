@@ -1,24 +1,16 @@
 import { Router } from "express";
+import { authController } from "./auth.controller.js";
+
 const router = Router();
 
-router.get("/auth", (req, res) => {
-  res.send({ message: "Ruta de Login" });
-});
+router.get("/auth", authController.getAll);
 
-router.get("/auth/:id", (req, res) => {
-  res.send({ message: `Ruta de Login con ID: ${req.params.id}` });
-});
+router.get("/auth/:id", authController.getById);
 
-router.post("/auth", (req, res) => {
-  res.send({ message: "Crear un nuevo Login" });
-});
+router.post("/auth", authController.create);
 
-router.put("/auth/:id", (req, res) => {
-  res.send({ message: `Actualizar Login con ID: ${req.params.id}` });
-});
+router.put("/auth/:id", authController.update);
 
-router.delete("/auth/:id", (req, res) => {
-  res.send({ message: `Eliminar Login con ID: ${req.params.id}` });
-});
+router.delete("/auth/:id", authController.softDelete);
 
 export default router;

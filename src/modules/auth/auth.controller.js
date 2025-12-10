@@ -18,7 +18,7 @@ const softDelete = (req, res) => {
   res.send({ message: `Eliminar producto con ID: ${req.params.id}` });
 };
 
-export const productsController = {
+export const authController = {
   getAll,
   getById,
   create,

@@ -1,24 +1,15 @@
 import { Router } from "express";
+import { productsController } from "./products.controller.js";
 const router = Router();
 
-router.get("/products", (req, res) => {
-  res.send({ message: "Ruta de productos" });
-});
+router.get("/products", productsController.getAll);
 
-router.get("/product/:id", (req, res) => {
-  res.send({ message: `Ruta de producto con ID: ${req.params.id}` });
-});
+router.get("/product/:id", productsController.getById);
 
-router.post("/product", (req, res) => {
-  res.send({ message: "Crear un nuevo producto" });
-});
+router.post("/product", productsController.create);
 
-router.put("/product/:id", (req, res) => {
-  res.send({ message: `Actualizar producto con ID: ${req.params.id}` });
-});
+router.put("/product/:id", productsController.update);
 
-router.delete("/product/:id", (req, res) => {
-  res.send({ message: `Eliminar producto con ID: ${req.params.id}` });
-});
+router.delete("/product/:id", productsController.softDelete);
 
 export default router;
