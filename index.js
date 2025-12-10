@@ -3,6 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import notFoundMiddleware from "./src/middlewares/not-found.js";
+import modulesRouter from "./src/routes/index.js";
 
 dotenv.config();
 
@@ -24,13 +25,8 @@ app.get("/", (req, res) => {
   res.send({ message: "API is working" });
 });
 
-app.get("/auth", (req, res) => {
-  res.send({ message: "Ruta Login" });
-});
-
-app.get("/products", (req, res) => {
-  res.send({ message: "Ruta de productos" });
-});
+//Routes from modules
+app.use("/", modulesRouter);
 
 // Middleware for handling 404 - Not Found
 app.use(notFoundMiddleware);
