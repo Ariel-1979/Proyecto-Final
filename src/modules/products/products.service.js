@@ -1,4 +1,5 @@
 import { productsModel } from "./products.model.js";
+import { validateProductData } from "./utils/validate-product-data.js";
 
 const getAll = async () => {
   try {
@@ -25,7 +26,23 @@ const getById = async (id) => {
   }
 };
 
+const create = async (productData) => {
+  if (validateProductData(productData) !== true) {
+    throw new Error("Product data validation failed");
+  }
+  try {
+    const newProduct = await productsModel.create(productData);
+    return newProduct;
+  } catch (error) {
+    console.log(error);
+    throw new Error(
+      "Error in service while creating product: " + error.message
+    );
+  }
+};
+
 export const productsService = {
   getAll,
   getById,
+  create,
 };

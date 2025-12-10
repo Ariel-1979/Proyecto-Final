@@ -22,8 +22,13 @@ const getById = async (req, res) => {
   }
 };
 
-const create = (req, res) => {
-  res.send({ message: "Crear un nuevo producto" });
+const create = async (req, res) => {
+  try {
+    const newProduct = await productsService.create(req.body);
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 const update = (req, res) => {
