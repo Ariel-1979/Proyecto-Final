@@ -1,27 +1,26 @@
-const getAll = (req, res) => {
+import { validateUser } from "./utils/validate-user.js";
+import { hashPassword } from "./utils/password-hash.js";
+import { authService } from "./auth.service.js";
+
+const login = (req, res) => {
   res.send({ message: "Ruta de productos" });
 };
 
-const getById = (req, res) => {
-  res.send({ message: `Ruta de producto con ID: ${req.params.id}` });
-};
+const register = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    validateUser(username, password);
+    const userRegistered = await authService.register(username, password);
 
-const create = (req, res) => {
-  res.send({ message: "Crear un nuevo producto" });
-};
-
-const update = (req, res) => {
-  res.send({ message: `Actualizar producto con ID: ${req.params.id}` });
-};
-
-const softDelete = (req, res) => {
-  res.send({ message: `Eliminar producto con ID: ${req.params.id}` });
+    res.json(userRegistered);
+  } catch (error) {
+    console.log("Controller error - Register:", error);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Server error" });
+  }
 };
 
 export const authController = {
-  getAll,
-  getById,
-  create,
-  update,
-  softDelete,
+  login,
+  register,
 };

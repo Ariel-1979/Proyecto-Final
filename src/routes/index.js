@@ -4,7 +4,7 @@ import AuthRouter from "../modules/auth/auth.routes.js";
 import { Router } from "express";
 const router = Router();
 
-router.use("/", PruductsRouter);
-router.use("/", AuthRouter);
+router.use("/api", PruductsRouter);
+router.use("/auth", AuthRouter);
 
 export default router;

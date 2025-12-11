@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 //Routes from modules
-app.use("/api", modulesRouter);
+app.use("/", modulesRouter);
 
 // Middleware for handling 404 and errors
 app.use(notFoundMiddleware);
