@@ -29,7 +29,21 @@ const findUserByUsername = async (username) => {
   }
 };
 
+const login = async (username, password) => {
+  try {
+    const user = await findUserByUsername(username);
+    if (user && user.password === password) {
+      return user;
+    }
+    return null;
+  } catch (error) {
+    console.log("Model error - login:", error);
+    throw error;
+  }
+};
+
 export const authModel = {
   register,
   findUserByUsername,
+  login,
 };
