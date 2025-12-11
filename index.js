@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 // Middleware for handling 404 and errors
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
-s;
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
