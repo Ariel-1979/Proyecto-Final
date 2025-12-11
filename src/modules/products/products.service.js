@@ -26,9 +26,7 @@ const getById = async (id) => {
 };
 
 const create = async (productData) => {
-  if (validateProductData(productData) !== true) {
-    throw createHttpError(400, "Product data validation failed");
-  }
+  validateProductData(productData);
   try {
     const newProduct = await productsModel.create(productData);
     return newProduct;
@@ -53,9 +51,7 @@ const deleteById = async (id) => {
 };
 
 const update = async (id, updateData) => {
-  if (validateProductData(updateData) !== true) {
-    throw createHttpError(400, "Product data validation failed");
-  }
+  validateProductData(updateData);
   try {
     const updatedProduct = await productsModel.update(id, updateData);
     if (!updatedProduct) {

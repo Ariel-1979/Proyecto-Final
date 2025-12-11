@@ -2,18 +2,13 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import notFoundMiddleware from "./src/middlewares/not-found.js";
-import modulesRouter from "./src/routes/index.js";
 import morgan from "morgan";
+import modulesRouter from "./src/routes/index.js";
+import { notFoundMiddleware } from "./src/middlewares/not-found.js";
+import { errorHandlerMiddleware } from "./src/middlewares/error-handler.js";
+import { corsOptions } from "./src/utils/cors-options.js";
 
 dotenv.config();
-
-const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -22,16 +17,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-// Routes
-app.get("/", (req, res) => {
-  res.send({ message: "API is working" });
-});
-
 //Routes from modules
 app.use("/api", modulesRouter);
 
-// Middleware for handling 404 - Not Found
+// Middleware for handling 404 and errors
 app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 // Start the server
 app.listen(PORT, () => {
