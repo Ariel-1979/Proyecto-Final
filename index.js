@@ -19,11 +19,14 @@ app.use(morgan("dev"));
 
 //Routes from modules
 app.use("/", modulesRouter);
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the API" });
+});
 
 // Middleware for handling 404 and errors
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
-
+s;
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
