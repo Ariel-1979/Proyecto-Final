@@ -5,20 +5,20 @@ const getAll = async (req, res) => {
     const products = await productsService.getAll();
     res.json(products);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Controller error - getAll:", error);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Server error" });
   }
 };
 
 const getById = async (req, res) => {
   try {
     const product = await productsService.getById(req.params.id);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).json({ error: "Product not found" });
-    }
+    res.json(product);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Controller error - getById:", error);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Server error" });
   }
 };
 
@@ -27,16 +27,37 @@ const create = async (req, res) => {
     const newProduct = await productsService.create(req.body);
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Controller error - create:", error);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Server error" });
   }
 };
 
-const update = (req, res) => {
-  res.send({ message: `Actualizar producto con ID: ${req.params.id}` });
+const deleteById = async (req, res) => {
+  try {
+    await productsService.deleteById(req.params.id);
+    res.json({
+      message: `Producto con ID: ${req.params.id} eliminado correctamente`,
+    });
+  } catch (error) {
+    console.log("Controller error - deleteById:", error);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Server error" });
+  }
 };
 
-const softDelete = (req, res) => {
-  res.send({ message: `Eliminar producto con ID: ${req.params.id}` });
+const update = async (req, res) => {
+  try {
+    const updatedProduct = await productsService.update(
+      req.params.id,
+      req.body
+    );
+    res.json(updatedProduct);
+  } catch (error) {
+    console.log("Controller error - update:", error);
+    const status = error.status || 500;
+    res.status(status).json({ error: error.message || "Server error" });
+  }
 };
 
 export const productsController = {
@@ -44,5 +65,5 @@ export const productsController = {
   getById,
   create,
   update,
-  softDelete,
+  deleteById,
 };

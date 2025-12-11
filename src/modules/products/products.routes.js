@@ -8,8 +8,8 @@ router.get("/product/:id", productsController.getById);
 
 router.post("/product", productsController.create);
 
-router.put("/product/:id", productsController.update);
+router.delete("/product/:id", productsController.deleteById);
 
-router.delete("/product/:id", productsController.softDelete);
+router.put("/product/:id", productsController.update);
 
 export default router;

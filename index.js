@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import notFoundMiddleware from "./src/middlewares/not-found.js";
 import modulesRouter from "./src/routes/index.js";
+import morgan from "morgan";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 // Routes
 app.get("/", (req, res) => {
@@ -26,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 //Routes from modules
-app.use("/", modulesRouter);
+app.use("/api", modulesRouter);
 
 // Middleware for handling 404 - Not Found
 app.use(notFoundMiddleware);
